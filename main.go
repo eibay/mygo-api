@@ -7,12 +7,14 @@ import (
 
 const (
 	host = "localhost"
-	port = "8000"
+	port = "8001"
 )
 
 func main() {
 	apiHandler := ApiHandler{}
+
 	http.HandleFunc("/hello", apiHandler.handleHello)
+	http.HandleFunc("/health", apiHandler.handleHealthCheck)
 
 	err := http.ListenAndServe(host+":"+port, nil)
 	if err != nil {

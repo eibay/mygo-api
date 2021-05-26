@@ -2,8 +2,8 @@
 Basic api using go language, docker and github ci workflow
 
 ## Run locally using docker 
-
-
+docker build -t mygo-api .   
+docker run -it -p 8080:8080 mygo-api
 ## Build
 
 ## Deployment

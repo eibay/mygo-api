@@ -1,0 +1,55 @@
+name: build
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.gitignore'
+      - '**/*.gitattributes'
+
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.gitignore'
+      - '**/*.gitattributes'
+
+  workflow_dispatch:
+    branches:
+      - main
+      - dev
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.gitignore'
+      - '**/*.gitattributes'
+jobs:
+  createrelease:
+    name: Create Release
+    runs-on: ubuntu-latest
+    outputs: 
+      version: ${{ steps.GitVersion.outputs.MajorMinorPatch }}
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.5
+      with:
+          versionSpec: '5.x'
+          
+    - name: GitVersion
+      uses: gittools/actions/gitversion/execute@v0.9.5
+      id: GitVersion
+
+    - name: Create Release
+      if: github.ref == 'refs/heads/main'
+      id: create_release
+      uses: actions/create-release@v1
+      env: 
+        GITHUB_TOKEN: ${{ secrets.CI_GITHUB_TOKEN }} 
+      with:
+        tag_name: ${{ steps.GitVersion.outputs.MajorMinorPatch }}  

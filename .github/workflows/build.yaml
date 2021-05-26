@@ -55,12 +55,9 @@ jobs:
         tag_name: ${{ steps.GitVersion.outputs.MajorMinorPatch }}  
   
   trigger-dev-deploy:
-    name: Trigger Deploy To Dev
+    name: Trigger Dev Deployment 
     runs-on: ubuntu-18.04
     if: github.ref == 'refs/heads/main'
-    needs:
-      - build-images
-      - getversion
 
     steps:
     - name: Deploy Dev Input

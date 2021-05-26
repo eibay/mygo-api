@@ -54,6 +54,23 @@ jobs:
       with:
         tag_name: ${{ steps.GitVersion.outputs.MajorMinorPatch }}  
   
+  start-build:
+    name: Setup and build Go
+    runs-on: ubuntu-18.04
+    steps:
+      - name:  Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.15.0'
+      - name: Install dependencies
+        run: |
+          go version 
+          go get -u golang.org/x/lint/golint
+      - name: Run build
+        run: |
+          docker run build .
+          
+
   trigger-dev-deploy:
     name: Trigger Dev Deployment 
     runs-on: ubuntu-18.04
@@ -72,6 +89,6 @@ jobs:
       id: deploy-to-dev
       uses: benc-uk/workflow-dispatch@v1
       with:
-        token: ${{ secrets.GIT_HUB_PAT }}
+        token: ${{ secrets.CI_GITHUB_TOKEN }}
         workflow: deploy dev
         inputs: ${{ steps.DeployDevInput.outputs.ref_input }}

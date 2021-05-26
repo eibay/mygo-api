@@ -20,14 +20,9 @@ jobs:
   startdeployment:
     name: Signal Deployment Started
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ github.event.inputs.ref }}
-      deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
     steps:
       - uses: chrnorm/deployment-action@releases/v1
         name: Create GitHub deployment
-        id: deployment
-        with:
-          token: ${{ secrets.CI_GITHUB_TOKEN }}
-          environment: ${{ env.ENVIRONMENT }}
-          ref: ${{ github.event.inputs.ref  }}
+        bash: |
+          echo "TODO: Work in progress..."

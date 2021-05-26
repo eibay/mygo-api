@@ -68,8 +68,8 @@ jobs:
           go get -u golang.org/x/lint/golint
       - name: Run build
         run: |
-          docker run build .
-          
+          docker build . --file Dockerfile --tag mygoapi:$(date +%s)
+
 
   trigger-dev-deploy:
     name: Trigger Dev Deployment 
@@ -91,4 +91,3 @@ jobs:
       with:
         token: ${{ secrets.CI_GITHUB_TOKEN }}
         workflow: deploy dev
-        inputs: ${{ steps.DeployDevInput.outputs.ref_input }}

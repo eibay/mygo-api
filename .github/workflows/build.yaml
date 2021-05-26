@@ -53,3 +53,28 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.CI_GITHUB_TOKEN }} 
       with:
         tag_name: ${{ steps.GitVersion.outputs.MajorMinorPatch }}  
+  
+  trigger-dev-deploy:
+    name: Trigger Deploy To Dev
+    runs-on: ubuntu-18.04
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - build-images
+      - getversion
+
+    steps:
+    - name: Deploy Dev Input
+      id: DeployDevInput
+      run: |
+        echo ::set-output name=ref_input::'{ "ref": "${{ needs.getversion.outputs.version }}" }'
+      env:
+        version: ${{ needs.getversion.outputs.version }}
+
+    - name: Deploy To Dev
+      if: github.ref == 'refs/heads/main'
+      id: deploy-to-dev
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        token: ${{ secrets.GIT_HUB_PAT }}
+        workflow: deploy dev
+        inputs: ${{ steps.DeployDevInput.outputs.ref_input }}

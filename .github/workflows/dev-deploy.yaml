@@ -1,0 +1,33 @@
+name: deploy dev
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'GIT Release Tag'
+        required: true
+
+env:
+  AWS_ACCOUNT: "123456789"
+  REGION: "ap-southeast-2"
+  CDK_ENV: "dev"
+  ENVIRONMENT: "dev"
+  IMAGE_ID: "eibayan/goimage"
+  IMAGE_TAG: "latest"
+  
+
+jobs:
+  startdeployment:
+    name: Signal Deployment Started
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ github.event.inputs.ref }}
+      deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+    steps:
+      - uses: chrnorm/deployment-action@releases/v1
+        name: Create GitHub deployment
+        id: deployment
+        with:
+          token: ${{ secrets.CI_GITHUB_TOKEN }}
+          environment: ${{ env.ENVIRONMENT }}
+          ref: ${{ github.event.inputs.ref  }}

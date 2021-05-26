@@ -1,10 +1,12 @@
 FROM public.ecr.aws/lambda/provided:al2 as build
 # install compiler
-RUN yum install -y golang git
+RUN yum install -y golang
+RUN yum install -y git
 RUN go env -w GOPROXY=direct
 # cache dependencies
 # ADD go.mod go.sum ./
-# RUN go mod download
+ADD go.mod ./
+RUN go mod download
 # build
 ADD . .
 RUN go build -o /main

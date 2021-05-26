@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os/exec"
 )
 
 type ApiHandler struct{}
@@ -11,6 +12,12 @@ type ApiHandler struct{}
 type ResponseHealthCheck struct {
 	Status      string `json:"status"`
 	Description string `json:"description"`
+}
+
+type ResponseMetadata struct {
+	Version       string `json:"version"`
+	Description   string `json:"description"`
+	LastCommitSha string `json:"lastcommitsha"`
 }
 
 func (ah *ApiHandler) handleHello(w http.ResponseWriter, r *http.Request) {
@@ -30,4 +37,26 @@ func (ah *ApiHandler) handleHealthCheck(w http.ResponseWriter, r *http.Request) 
 		log.Fatal(err)
 	}
 	w.Write(response)
+}
+
+func (ah *ApiHandler) handleMetadata(w http.ResponseWriter, r *http.Request) {
+	responseMetaData := ResponseMetadata{
+		Version:       "1.0.777",
+		Description:   "basic go-lang api service",
+		LastCommitSha: string(getSha()),
+	}
+
+	response, err := json.Marshal(&responseMetaData)
+	if err != nil {
+		log.Fatal(err)
+	}
+	w.Write(response)
+}
+
+func getSha() []byte {
+	sha, err := exec.Command("bash", "-c", "git rev-parse HEAD").Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return sha
 }

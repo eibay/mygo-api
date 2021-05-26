@@ -7,16 +7,8 @@ import (
 
 const (
 	host = "localhost"
-	port = "8080"
+	port = "8000"
 )
-
-type ApiHandler struct{}
-
-func (ah *ApiHandler) handleHello(w http.ResponseWriter, r *http.Request) {
-	response := "Hello World"
-
-	w.Write([]byte(response))
-}
 
 func main() {
 	apiHandler := ApiHandler{}

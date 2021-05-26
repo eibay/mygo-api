@@ -8,7 +8,7 @@ import (
 
 const (
 	host = "localhost"
-	port = "3030"
+	port = "8080"
 )
 
 func main() {

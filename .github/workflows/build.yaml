@@ -69,8 +69,10 @@ jobs:
       - name: Run build
         run: |
           echo ${{ github.workspace }}
-          pwd
-          echo ${{ ls }}
+          echo "ls GITHUB_WORKSPACE"
+          ls -la $GITHUB_WORKSPACE
+          echo "ls HOME"
+          ls -la $HOME
           docker build . --file Dockerfile --tag mygoapi:$(date +%s) 
 
   trigger-dev-deploy:

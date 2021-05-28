@@ -68,8 +68,8 @@ jobs:
           go get -u golang.org/x/lint/golint
       - name: Run build
         run: |
+          echo ${{ github.workspace }}
           docker build . --file Dockerfile --tag mygoapi:$(date +%s)
-
 
   trigger-dev-deploy:
     name: Trigger Dev Deployment 

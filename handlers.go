@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"os/exec"
 )
 
 type ApiHandler struct{}
@@ -43,7 +42,7 @@ func (ah *ApiHandler) handleMetadata(w http.ResponseWriter, r *http.Request) {
 	responseMetaData := ResponseMetadata{
 		Version:       "1.0.777",
 		Description:   "basic go-lang api service",
-		LastCommitSha: string(getSha()),
+		LastCommitSha: "oasdfkjqoewrpsdfklnvkjowo",
 	}
 
 	response, err := json.Marshal(&responseMetaData)
@@ -51,12 +50,4 @@ func (ah *ApiHandler) handleMetadata(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	w.Write(response)
-}
-
-func getSha() []byte {
-	sha, err := exec.Command("bash", "-c", "git rev-parse HEAD").Output()
-	if err != nil {
-		log.Fatal(err)
-	}
-	return sha
 }

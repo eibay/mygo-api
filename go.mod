@@ -1,3 +1,3 @@
-module github.com/eibay/mygo-api
+module eibayan.com/goapi
 
 go 1.15

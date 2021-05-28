@@ -1,16 +1,17 @@
 FROM public.ecr.aws/lambda/provided:al2 as build
-# install compiler
-RUN yum install -y golang
-RUN yum install -y git
+RUN yum update -y \
+  && yum install -y \
+  golang \
+  git \
+  bash \
+  && yum clean all
 RUN go env -w GOPROXY=direct
-# cache dependencies
 # ADD go.mod go.sum ./
 ADD go.mod ./
 RUN go mod download
-# build
 ADD . .
 RUN go build -o /main
-# copy artifacts to a clean image
+
 FROM public.ecr.aws/lambda/provided:al2
 COPY --from=build /main /main
 ENTRYPOINT [ "/main" ]      

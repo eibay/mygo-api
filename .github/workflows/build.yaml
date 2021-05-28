@@ -67,12 +67,8 @@ jobs:
           go version 
           go get -u golang.org/x/lint/golint
       - name: Run build
+        with : { entrypoint : "/bin/sh" , args : '-c "ls -la $GITHUB_WORKSPACE"' }
         run: |
-          echo ${{ github.workspace }}
-          echo "ls GITHUB_WORKSPACE"
-          ls -la $GITHUB_WORKSPACE
-          echo "ls HOME"
-          ls -la $HOME
           docker build . --file Dockerfile --tag mygoapi:$(date +%s) 
 
   trigger-dev-deploy:

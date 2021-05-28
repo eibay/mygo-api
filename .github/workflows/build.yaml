@@ -68,8 +68,9 @@ jobs:
           go get -u golang.org/x/lint/golint
       - name: Run build
         with : { entrypoint : "/bin/sh" , args : '-c "ls -la $GITHUB_WORKSPACE"' }
-        run: |
-          docker build . --file Dockerfile --tag mygoapi:$(date +%s) 
+        uses : "docker://alpine:latest"
+        # run: |
+        #   docker build . --file Dockerfile --tag mygoapi:$(date +%s) 
 
   trigger-dev-deploy:
     name: Trigger Dev Deployment 

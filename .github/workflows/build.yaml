@@ -70,7 +70,7 @@ jobs:
         run: |
           echo ${{ github.workspace }}
           pwd
-          ls
+          echo ${{ ls }}
           docker build . --file Dockerfile --tag mygoapi:$(date +%s) 
 
   trigger-dev-deploy:

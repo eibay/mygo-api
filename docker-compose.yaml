@@ -1,0 +1,36 @@
+version: "3.8"
+
+services: 
+  api:
+    build: .
+    image: golang:alpine 
+    container_name: "mygo-api"
+    ports: 
+      - "8080:8080"
+    # environment: 
+    #   TEST: "test"
+    #   DB_USERNAME: "postgres"
+    #   DB_PASSWORD: "postgres"
+    #   DB_DB: "postgres"
+    #   DB_HOST: "db" 
+    #   DB_TABLE: "postgres"
+    #   DB_PORT: "5432"
+    # volumes: db_postgres:/var/lib/postgresql/data
+    # depends_on: db
+    networks: 
+      - fullstack
+  # db:
+  #   image: postgres:12.2-alpine
+  #   container_name: "database"
+  #   ports: "5432":"5432"
+  #   environment: 
+  #     - POSTGRES_DB=postgres
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #   networks: fullstack
+  #   volumes: db_postgres:/var/lib/postgresql/data
+# volumes:
+#   db_postgres:
+networks:
+  fullstack:
+    driver: bridge 

@@ -14,7 +14,7 @@ func TestHealthEndpoint(t *testing.T) {
 	fmt.Println("Running E2E test for health check endpoint")
 
 	client := resty.New()
-	resp, err := client.R().Get("http://localhost:8080/health")
+	resp, err := client.R().Get(BASE_URL + "/health")
 	if err != nil {
 		t.Fail()
 	}

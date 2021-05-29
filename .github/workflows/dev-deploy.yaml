@@ -12,7 +12,7 @@ env:
   REGION: "ap-southeast-2"
   CDK_ENV: "dev"
   ENVIRONMENT: "dev"
-  IMAGE_ID: "eibayan/goimage"
+  IMAGE_ID: "eibayan/mygo"
   IMAGE_TAG: "latest"
   
 

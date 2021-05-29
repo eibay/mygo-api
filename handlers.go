@@ -40,7 +40,7 @@ func (ah *ApiHandler) handleHealthCheck(w http.ResponseWriter, r *http.Request) 
 
 func (ah *ApiHandler) handleMetadata(w http.ResponseWriter, r *http.Request) {
 	responseMetaData := ResponseMetadata{
-		Version:       "1.0.777",
+		Version:       "1.0.7",
 		Description:   "basic go-lang api service",
 		LastCommitSha: "oasdfkjqoewrpsdfklnvkjowo",
 	}

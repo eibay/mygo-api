@@ -1,17 +1,14 @@
-FROM public.ecr.aws/lambda/provided:al2 as build
-RUN yum update -y \
-  && yum install -y \
-  golang \
-  git \
-  bash \
-  && yum clean all
-RUN go env -w GOPROXY=direct
-# ADD go.mod go.sum ./
-ADD go.mod ./
-RUN go mod download
-ADD . .
-RUN go build -o /main
+FROM golang:alpine AS build
 
-FROM public.ecr.aws/lambda/provided:al2
+RUN apk add --no-cache curl git alpine-sdk
+
+WORKDIR $GOPATH/src/github.com/eibay/mygo-api
+
+COPY . $GOPATH/src/github.com/eibay/mygo-api/
+RUN CGO_ENABLED=0 GOOS=linux go build -o /main
+
+FROM alpine:latest
+WORKDIR /main
 COPY --from=build /main /main
-ENTRYPOINT [ "/main" ]      
+EXPOSE 8080
+ENTRYPOINT [ "./main" ]      

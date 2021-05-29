@@ -15,7 +15,6 @@ env:
   IMAGE_ID: "eibayan/mygo"
   IMAGE_TAG: "latest"
   
-
 jobs:
   startdeployment:
     name: Signal Deployment Started

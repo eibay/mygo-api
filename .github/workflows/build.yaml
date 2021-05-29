@@ -26,6 +26,25 @@ on:
       - '**/*.gitignore'
       - '**/*.gitattributes'
 jobs:
+  getversion:
+    name: Get Version
+    runs-on: ubuntu-latest
+    outputs: 
+      version: ${{ steps.GitVersion.outputs.MajorMinorPatch }}
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.5
+      with:
+        versionSpec: '5.x'
+
+    - name: GitVersion
+      uses: gittools/actions/gitversion/execute@v0.9.5
+      id: GitVersion
+      
   create-release:
     name: Create Release
     runs-on: ubuntu-latest
@@ -43,8 +62,8 @@ jobs:
       env: 
         GITHUB_TOKEN: ${{ secrets.CI_GITHUB_TOKEN }} 
       with:
-        tag_name: ${{ steps.GitVersion.outputs.MajorMinorPatch }}  
-  
+        tag_name: ${{ steps.GitVersion.outputs.MajorMinorPatch }} 
+
   build-and-publish:
     runs-on: ubuntu-latest
     steps:

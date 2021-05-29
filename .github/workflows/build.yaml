@@ -65,7 +65,7 @@ jobs:
     name: Trigger Dev Deployment 
     runs-on: ubuntu-18.04
     if: github.ref == 'refs/heads/main'
-
+    needs: get-version
     steps:
     - name: Deploy Dev Input
       id: DeployDevInput

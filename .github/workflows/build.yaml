@@ -64,14 +64,14 @@ jobs:
     - name: Stop the api
       run: docker-compose down
 
-  run-ci-test:
+  build-publish-api:
     name: Run CI test
     runs-on: ubuntu-latest
     needs: 
       - get-version
       - run-ci-test
     steps:
-    - name: Build the Docker image
+    - name: Build the API docker image
       run: docker build . --file Dockerfile --tag eibayan/mygo:$(date +%s)
 
     - name: Publish to Registry
@@ -88,7 +88,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     needs: 
       - get-version
-      - run-ci-test
+      - build-publish-api
     steps:
     - name: Deploy Dev Input
       id: DeployDevInput

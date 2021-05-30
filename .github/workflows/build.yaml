@@ -65,7 +65,7 @@ jobs:
       run: docker-compose down
 
   build-publish-api:
-    name: Run CI test
+    name: Build And Publish API Image
     runs-on: ubuntu-latest
     needs: 
       - get-version

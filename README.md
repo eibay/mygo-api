@@ -42,6 +42,7 @@ Basic api using go language, docker and github actions CI workflow. Every commit
 - Adding more tests coverage
 - Add build matrix for different environment (dev, stage, uat, prod)
 - Trigger dev deployment to actual cloud provider
+- Setup infrastructure as code (IAC) using Cloudformation Template, CDK or Terraform
 - Setting up [ArgoCD](https://argoproj.github.io/projects/argo-cd)
 
 

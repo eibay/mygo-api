@@ -55,7 +55,6 @@ jobs:
     
     - name: Run CI test 
       run: |
-        docker-compose up --build
         go test ./... -tags=e2e -v
 
     - name: Build the Docker image

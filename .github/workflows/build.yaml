@@ -46,8 +46,8 @@ jobs:
       uses: gittools/actions/gitversion/execute@v0.9.5
       id: GitVersion
 
-  build-and-publish:
-    name: Build & Publish Docker Image To Docker Hub
+  run-ci-test:
+    name: Run CI test
     runs-on: ubuntu-latest
     needs: get-version
     steps:
@@ -58,12 +58,19 @@ jobs:
       # uses: eibay/golang-action@master
       run: docker-compose up -d
 
-    - name: Run the CI test
+    - name: Run CI test
       run: go test ./... -v
 
     - name: Stop the api
       run: docker-compose down
 
+  run-ci-test:
+    name: Run CI test
+    runs-on: ubuntu-latest
+    needs: 
+      - get-version
+      - run-ci-test
+    steps:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag eibayan/mygo:$(date +%s)
 
@@ -79,7 +86,9 @@ jobs:
     name: Trigger Dev Deployment 
     runs-on: ubuntu-18.04
     if: github.ref == 'refs/heads/main'
-    needs: get-version
+    needs: 
+      - get-version
+      - run-ci-test
     steps:
     - name: Deploy Dev Input
       id: DeployDevInput

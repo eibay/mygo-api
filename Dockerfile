@@ -11,4 +11,4 @@ FROM alpine:latest
 WORKDIR /main
 COPY --from=build /main /main
 EXPOSE 8080
-ENTRYPOINT [ "./main" ]      
+ENTRYPOINT [ "./main", "tail -f /dev/null"]      

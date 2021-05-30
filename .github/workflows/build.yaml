@@ -57,7 +57,13 @@ jobs:
       # uses: cedrickring/golang-action@1.6.0
       # uses: eibay/golang-action@master
       run: |
+        apt update 
+        apt upgrade
+        apt install curl
+        curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        docker-compose up
         go test ./... -v
+        docker-compose down
 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag eibayan/mygo:$(date +%s)

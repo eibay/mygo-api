@@ -61,6 +61,9 @@ jobs:
     - name: Run the CI test
       run: go test ./... -v
 
+    - name: Stop the api
+      run: docker-compose down
+
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag eibayan/mygo:$(date +%s)
 

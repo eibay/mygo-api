@@ -1,5 +1,5 @@
 # mygo-api
-Basic api using go language, docker and github actions CI workflow
+Basic api using go language, docker and github actions CI workflow. Every commit and push to main branch, triggers a continuous integration (CI) pipeline via github actions, which in turn automatically build a docker image and pushed to docker hub.
 
 ## Run locally using docker 
 ```bash
@@ -19,6 +19,15 @@ go test ./... -tags=e2e -v
 - Create a personal access token by going to Settings -> Developer settings -> Personal access tokens and name it: CI_GITHUB_TOKEN
 - Copy the generated code and paste it on repo's Settings -> Secrets -> Value text area after clicking on "New repository secret" button
 - Create additional secrets for docker hub details: DOCKER_USERNAME, DOCKER_PASSWORD
+## Optional: Kubernetes setup using kind on mac
+```bash
+brew install kind
+kind create cluster
+kubectl cluster-info --context kind-kind
+kubectl get pods
+kubectl get services 
+```
+
 
 ## Additional challenges
 - Adding more tests coverage

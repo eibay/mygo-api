@@ -52,6 +52,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - name: Run CI test 
+      run: |
+        docker-compose up --build
+        go test ./... -tags=e2e -v
+        
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag eibayan/mygo:$(date +%s)
 

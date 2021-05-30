@@ -71,6 +71,8 @@ jobs:
       - get-version
       - run-ci-test
     steps:
+    - uses: actions/checkout@v2
+    
     - name: Build the API docker image
       run: docker build . --file Dockerfile --tag eibayan/mygo:$(date +%s)
 

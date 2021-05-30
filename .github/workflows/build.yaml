@@ -56,12 +56,13 @@ jobs:
       run: |
         docker-compose up --build
         go test ./... -tags=e2e -v
-        
+
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag eibayan/mygo:$(date +%s)
 
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
+      if: github.ref == 'refs/heads/main'
       with:
         name: eibayan/mygo
         username: ${{ secrets.DOCKER_USERNAME }}

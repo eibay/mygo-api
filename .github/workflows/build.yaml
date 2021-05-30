@@ -53,9 +53,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Run CI test 
-      run: |
-        go test ./... -tags=e2e -v
+    - name: Run CI Test
+      uses: cedrickring/golang-action@1.6.0
 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag eibayan/mygo:$(date +%s)

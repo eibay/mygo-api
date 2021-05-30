@@ -55,7 +55,9 @@ jobs:
     
     - name: Run CI Test
       # uses: cedrickring/golang-action@1.6.0
-      uses: eibay/golang-action@master
+      # uses: eibay/golang-action@master
+      run: |
+        go test ./... -v
 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag eibayan/mygo:$(date +%s)
